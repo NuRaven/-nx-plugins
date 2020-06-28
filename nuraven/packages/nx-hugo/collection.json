@@ -1,0 +1,12 @@
+{
+  "$schema": "../../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "name": "nx-hugo",
+  "version": "0.0.1",
+  "schematics": {
+    "nx-hugo": {
+      "factory": "./src/schematics/nx-hugo/schematic",
+      "schema": "./src/schematics/nx-hugo/schema.json",
+      "description": "nx-hugo schematic"
+    }
+  }
+}
