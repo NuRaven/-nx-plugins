@@ -1,0 +1,181 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "$id": "https://json-schema.org/draft-07/schema",
+  "title": "Build builder",
+  "description": "",
+  "type": "object",
+  "properties": {
+    "baseURL": {
+      "type": "string",
+      "description": "Hostname (and path) to the root, e.g. http://spf13.com/",
+      "alias": "b"
+    },
+    "buildDrafts": {
+      "type": "boolean",
+      "description": "Include content marked as draft",
+      "alias": "D"
+    },
+    "buildExpired": {
+      "type": "boolean",
+      "description": "Include expired content",
+      "alias": "E"
+    },
+    "buildFuture": {
+      "type": "boolean",
+      "description": "Include content with publishdate in the future",
+      "alias": "F"
+    },
+    "cacheDir": {
+      "type": "string",
+      "description": "Filesystem path to cache directory. Defaults: $TMPDIR/hugo_cache/"
+    },
+    "cleanDestinationDir": {
+      "type": "boolean",
+      "description": "Remove files from destination not found in static directories"
+    },
+    "config": {
+      "type": "string",
+      "description": "Config file (default is path/config.yaml|json|toml)"
+    },
+    "configDir": {
+      "type": "string",
+      "description": "Config dir (default \"config\")"
+    },
+    "contentDir": {
+      "type": "string",
+      "description": "Filesystem path to content directory",
+      "alias": "c"
+    },
+    "debug": {
+      "type": "boolean",
+      "description": "Debug output"
+    },
+    "destination": {
+      "type": "string",
+      "description": "Filesystem path to write files to",
+      "alias": "d"
+    },
+    "disableKinds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Disable different kind of pages (home, RSS etc.)"
+    },
+    "enableGitInfo": {
+      "type": "boolean",
+      "description": "Add Git revision, date and author info to the pages"
+    },
+    "environment": {
+      "type": "string",
+      "description": "Build environment",
+      "alias": "e"
+    },
+    "forceSyncStatic": {
+      "type": "boolean",
+      "description": "Copy all files when static is changed"
+    },
+    "gc": {
+      "type": "boolean",
+      "description": "Enable to run some cleanup tasks (remove unused cache files) after the build"
+    },
+    "help": {
+      "type": "boolean",
+      "description": "Help for hugo",
+      "alias": "h"
+    },
+    "i18n-warnings": {
+      "type": "boolean",
+      "description": "Print missing translations"
+    },
+    "ignoreCache": {
+      "type": "boolean",
+      "description": "Ignores the cache directory"
+    },
+    "ignoreVendor": {
+      "type": "boolean",
+      "description": "Ignores any _vendor directory"
+    },
+    "layoutDir": {
+      "type": "string",
+      "description": "Filesystem path to layout directory",
+      "alias": "l"
+    },
+    "log": {
+      "type": "boolean",
+      "description": "Enable Logging"
+    },
+    "logFile": {
+      "type": "string",
+      "description": "Log File path (if set, logging enabled automatically)"
+    },
+    "minify": {
+      "type": "boolean",
+      "description": "Minify any supported output format (HTML, XML etc.)"
+    },
+    "noChmod": {
+      "type": "boolean",
+      "description": "Don't sync permission mode of files"
+    },
+    "noTimes": {
+      "type": "boolean",
+      "description": "Don't sync modification time of files"
+    },
+    "path-warnings": {
+      "type": "boolean",
+      "description": "Print warnings on duplicate target paths etc"
+    },
+    "quiet": {
+      "type": "boolean",
+      "description": "Build in quiet mode"
+    },
+    "renderToMemory": {
+      "type": "boolean",
+      "description": "Render to memory (only useful for benchmark testing)"
+    },
+    "source": {
+      "type": "string",
+      "description": "Display memory and timing of different steps of the program",
+      "alias": "s"
+    },
+    "templateMetrics": {
+      "type": "boolean",
+      "description": "Display metrics about template executions"
+    },
+    "templateMetricsHints": {
+      "type": "boolean",
+      "description": "Calculate some improvement hints when combined with --templateMetrics"
+    },
+    "theme": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "themes to use (located in /themes/THEMENAME/)",
+      "alias": "t"
+    },
+    "themesDir": {
+      "type": "string",
+      "description": "Filesystem path to themes directory"
+    },
+    "trace": {
+      "type": "boolean",
+      "description": "write trace to file (not useful in general)"
+    },
+    "verbose": {
+      "type": "boolean",
+      "description": "Verbose logging",
+      "alias": "v"
+    },
+    "verboseLog": {
+      "type": "boolean",
+      "description": "Display metrics about template executions"
+    },
+    "watch": {
+      "type": "boolean",
+      "description": "Watch filesystem for changes and recreate as needed (default true)",
+      "alias": "w"
+    }
+  },
+  "required": []
+}

@@ -1,0 +1,227 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "$id": "https://json-schema.org/draft-07/schema",
+  "title": "Serve builder",
+  "description": "",
+  "type": "object",
+  "properties": {
+    "appendPort": {
+      "type": "boolean",
+      "description": "Append port to baseURL (default true)",
+      "default": true
+    },
+    "baseURL": {
+      "type": "string",
+      "description": "Hostname (and path) to the root, e.g. http://spf13.com/",
+      "alias": "b"
+    },
+    "bind": {
+      "type": "string",
+      "description": "Interface to which the server will bind (default \"127.0.0.1\")",
+      "default": "127.0.0.1"
+    },
+    "buildDrafts": {
+      "type": "boolean",
+      "description": "Include content marked as draft",
+      "alias": "D"
+    },
+    "buildExpired": {
+      "type": "boolean",
+      "description": "Include expired content",
+      "alias": "E"
+    },
+    "buildFuture": {
+      "type": "boolean",
+      "description": "Include content with publishdate in the future",
+      "alias": "F"
+    },
+    "cacheDir": {
+      "type": "string",
+      "description": "Filesystem path to cache directory. Defaults: $TMPDIR/hugo_cache/"
+    },
+    "cleanDestinationDir": {
+      "type": "boolean",
+      "description": "Remove files from destination not found in static directories"
+    },
+    "config": {
+      "type": "string",
+      "description": "Config file (default is path/config.yaml|json|toml)"
+    },
+    "configDir": {
+      "type": "string",
+      "description": "Config dir (default \"config\")"
+    },
+    "contentDir": {
+      "type": "string",
+      "description": "Filesystem path to content directory",
+      "alias": "c"
+    },
+    "environment": {
+      "type": "string",
+      "description": "Build environment",
+      "alias": "e"
+    },
+    "destination": {
+      "type": "string",
+      "description": "Filesystem path to write files to",
+      "alias": "d"
+    },
+    "disableBrowserError": {
+      "type": "boolean",
+      "description": "Do not show build errors in the browser"
+    },
+    "disableFastRender": {
+      "type": "boolean",
+      "description": "Enables full re-renders on changes"
+    },
+    "disableKinds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Disable different kind of pages (home, RSS etc.)"
+    },
+    "disableLiveReload": {
+      "type": "boolean",
+      "description": "Watch without enabling live browser reload on rebuild"
+    },
+    "enableGitInfo": {
+      "type": "boolean",
+      "description": "Add Git revision, date and author info to the pages"
+    },
+    "forceSyncStatic": {
+      "type": "boolean",
+      "description": "Copy all files when static is changed"
+    },
+    "gc": {
+      "type": "boolean",
+      "description": "Enable to run some cleanup tasks (remove unused cache files) after the build"
+    },
+    "help": {
+      "type": "boolean",
+      "description": "Help for server",
+      "alias": "h"
+    },
+    "i18n-warnings": {
+      "type": "boolean",
+      "description": "Print missing translations"
+    },
+    "ignoreCache": {
+      "type": "boolean",
+      "description": "Ignores the cache directory"
+    },
+    "ignoreVendor": {
+      "type": "boolean",
+      "description": "Ignores any _vendor directory"
+    },
+    "layoutDir": {
+      "type": "string",
+      "description": "Filesystem path to layout directory",
+      "alias": "l"
+    },
+    "liveReloadPort": {
+      "type": "number",
+      "description": "Port for live reloading (i.e. 443 in HTTPS proxy situations) (default -1)"
+    },
+    "log": {
+      "type": "boolean",
+      "description": "Enable Logging"
+    },
+    "logFile": {
+      "type": "string",
+      "description": "Log File path (if set, logging enabled automatically)"
+    },
+    "meminterval": {
+      "type": "string",
+      "description": "Interval to poll memory usage (requires --memstats), valid time units are \"ns\", \"us\" (or \"µs\"), \"ms\", \"s\", \"m\", \"h\". (default \"100ms\")",
+      "default": "100ms"
+    },
+    "memstats": {
+      "type": "string",
+      "description": "Log memory usage to this file"
+    },
+    "minify": {
+      "type": "boolean",
+      "description": "Minify any supported output format (HTML, XML etc.)"
+    },
+    "navigateToChanged": {
+      "type": "boolean",
+      "description": "Navigate to changed content file on live browser reload"
+    },
+    "noChmod": {
+      "type": "boolean",
+      "description": "Don't sync permission mode of files"
+    },
+    "noHTTPCache": {
+      "type": "boolean",
+      "description": "Prevent HTTP caching"
+    },
+    "noTimes": {
+      "type": "boolean",
+      "description": "Don't sync modification time of files"
+    },
+    "path-warnings": {
+      "type": "boolean",
+      "description": "Print warnings on duplicate target paths etc"
+    },
+    "port": {
+      "type": "number",
+      "description": "Port on which the server will listen (default 1313)",
+      "alias": "p",
+      "default": 1313
+    },
+    "quiet": {
+      "type": "boolean",
+      "description": "Build in quiet mode"
+    },
+    "renderToDisk": {
+      "type": "boolean",
+      "description": "Render to Destination path (default is render to memory & serve from there)"
+    },
+    "source": {
+      "type": "string",
+      "description": "Filesystem path to read files relative from",
+      "alias": "s"
+    },
+    "templateMetrics": {
+      "type": "boolean",
+      "description": "Display metrics about template executions"
+    },
+    "templateMetricsHints": {
+      "type": "boolean",
+      "description": "Calculate some improvement hints when combined with --templateMetrics"
+    },
+    "theme": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "themes to use (located in /themes/THEMENAME/)",
+      "alias": "t"
+    },
+    "themesDir": {
+      "type": "string",
+      "description": "Filesystem path to themes directory"
+    },
+    "trace": {
+      "type": "boolean",
+      "description": "write trace to file (not useful in general)"
+    },
+    "verbose": {
+      "type": "boolean",
+      "description": "Verbose logging",
+      "alias": "v"
+    },
+    "verboseLog": {
+      "type": "boolean",
+      "description": "Display metrics about template executions"
+    },
+    "watch": {
+      "type": "boolean",
+      "description": "Watch filesystem for changes and recreate as needed (default true)",
+      "alias": "w",
+      "default": true
+    }
+  },
+  "required": []
+}
