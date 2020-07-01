@@ -2,7 +2,7 @@ import { JsonObject } from '@angular-devkit/core';
 import { ServeBuilderSchema } from './schema';
 import { MockBuilderContext } from '@nrwl/workspace/testing';
 import { of } from 'rxjs';
-import { runBuilder, runHugo } from './builder';
+import { runBuilder } from './builder';
 import { getMockContext } from '../../utils/testing';
 import * as builder from '../serve/builder';
 

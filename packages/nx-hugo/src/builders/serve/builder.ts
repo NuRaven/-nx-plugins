@@ -5,23 +5,11 @@ import {
   BuilderRun,
 } from '@angular-devkit/architect';
 import { Observable, from } from 'rxjs';
-import { concatMap, tap } from 'rxjs/operators';
+import { concatMap } from 'rxjs/operators';
 import { ServeBuilderSchema } from './schema';
 import { parseHugoParameters } from '../utils/utils';
 
-export function runBuilder(
-  options: ServeBuilderSchema,
-  context: BuilderContext
-): Observable<BuilderOutput> {
-  console.log('object');
-  return runHugo(options, context).pipe(
-    concatMap((result) => {
-      return result.output;
-    })
-  );
-}
-
-export function runHugo(
+function runHugo(
   options: ServeBuilderSchema,
   context: BuilderContext
 ): Observable<BuilderRun> {
@@ -40,6 +28,18 @@ export function runHugo(
       cwd: cwd,
       color: true,
       parallel: false,
+    })
+  );
+}
+
+export function runBuilder(
+  options: ServeBuilderSchema,
+  context: BuilderContext
+): Observable<BuilderOutput> {
+  console.log('object');
+  return runHugo(options, context).pipe(
+    concatMap((result) => {
+      return result.output;
     })
   );
 }
