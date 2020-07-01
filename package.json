@@ -26,7 +26,9 @@
     "help": "nx help"
   },
   "private": true,
-  "dependencies": {},
+  "dependencies": {
+    "hugo-bin": "^0.61.0"
+  },
   "devDependencies": {
     "@nrwl/nx-plugin": "9.4.5",
     "@nrwl/workspace": "9.4.5",

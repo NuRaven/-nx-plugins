@@ -3,5 +3,9 @@
   "version": "0.0.1",
   "main": "src/index.js",
   "schematics": "./collection.json",
-  "builders": "./builders.json"
+  "builders": "./builders.json",
+  "peerDependencies": {
+    "@nrwl/workspace": "9.4.5",
+    "hugo-bin": "0.61.0"
+  }
 }

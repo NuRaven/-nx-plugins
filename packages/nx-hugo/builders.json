@@ -5,6 +5,11 @@
       "implementation": "./src/builders/build/builder",
       "schema": "./src/builders/build/schema.json",
       "description": "build builder"
+    },
+    "server": {
+      "implementation": "./src/builders/serve/builder",
+      "schema": "./src/builders/serve/schema.json",
+      "description": "serve builder"
     }
   }
 }

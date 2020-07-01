@@ -1,10 +1,18 @@
 import { JsonObject } from '@angular-devkit/core';
 
-export interface BuildBuilderSchema extends JsonObject {
+export interface ServeBuilderSchema extends JsonObject {
+  /**
+   * Append port to baseURL (default true)
+   */
+  appendPort?: boolean;
   /**
    * Hostname (and path) to the root, e.g. http://spf13.com/
    */
   baseURL?: string;
+  /**
+   * Interface to which the server will bind (default "127.0.0.1")
+   */
+  bind?: string;
   /**
    * Include content marked as draft
    */
@@ -38,17 +46,25 @@ export interface BuildBuilderSchema extends JsonObject {
    */
   contentDir?: string;
   /**
-   * Debug output
-   */
-  debug?: boolean;
-  /**
    * Filesystem path to write files to
    */
   destination?: string;
   /**
+   * Do not show build errors in the browser
+   */
+  disableBrowserError?: boolean;
+  /**
+   * Enables full re-renders on changes
+   */
+  disableFastRender?: boolean;
+  /**
    * Disable different kind of pages (home, RSS etc.)
    */
   disableKinds?: string[];
+  /**
+   * Watch without enabling live browser reload on rebuild
+   */
+  disableLiveReload?: boolean;
   /**
    * Add Git revision, date and author info to the pages
    */
@@ -66,7 +82,7 @@ export interface BuildBuilderSchema extends JsonObject {
    */
   gc?: boolean;
   /**
-   * Help for hugo
+   * Help for server
    */
   help?: boolean;
   /**
@@ -86,6 +102,10 @@ export interface BuildBuilderSchema extends JsonObject {
    */
   layoutDir?: string;
   /**
+   * Port for live reloading (i.e. 443 in HTTPS proxy situations) (default -1)
+   */
+  liveReloadPort?: number;
+  /**
    * Enable Logging
    */
   log?: boolean;
@@ -94,13 +114,30 @@ export interface BuildBuilderSchema extends JsonObject {
    */
   logFile?: string;
   /**
+   * Interval to poll memory usage (requires --memstats), valid time units are "ns", "us" (or
+   * "µs"), "ms", "s", "m", "h". (default "100ms")
+   */
+  meminterval?: string;
+  /**
+   * Log memory usage to this file
+   */
+  memstats?: string;
+  /**
    * Minify any supported output format (HTML, XML etc.)
    */
   minify?: boolean;
   /**
+   * Navigate to changed content file on live browser reload
+   */
+  navigateToChanged?: boolean;
+  /**
    * Don't sync permission mode of files
    */
   noChmod?: boolean;
+  /**
+   * Prevent HTTP caching
+   */
+  noHTTPCache?: boolean;
   /**
    * Don't sync modification time of files
    */
@@ -110,15 +147,19 @@ export interface BuildBuilderSchema extends JsonObject {
    */
   'path-warnings'?: boolean;
   /**
+   * Port on which the server will listen (default 1313)
+   */
+  port?: number;
+  /**
    * Build in quiet mode
    */
   quiet?: boolean;
   /**
-   * Render to memory (only useful for benchmark testing)
+   * Render to Destination path (default is render to memory & serve from there)
    */
-  renderToMemory?: boolean;
+  renderToDisk?: boolean;
   /**
-   * Display memory and timing of different steps of the program
+   * Filesystem path to read files relative from
    */
   source?: string;
   /**

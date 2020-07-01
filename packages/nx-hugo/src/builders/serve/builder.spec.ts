@@ -2,9 +2,9 @@ import { Architect } from '@angular-devkit/architect';
 import { TestingArchitectHost } from '@angular-devkit/architect/testing';
 import { schema } from '@angular-devkit/core';
 import { join } from 'path';
-import { BuildBuilderSchema } from './schema';
+import { ServeBuilderSchema } from './schema';
 
-const options: BuildBuilderSchema = {};
+const options: ServeBuilderSchema = {};
 
 describe('Command Runner Builder', () => {
   let architect: Architect;
@@ -13,7 +13,7 @@ describe('Command Runner Builder', () => {
   beforeEach(async () => {
     const registry = new schema.CoreSchemaRegistry();
     registry.addPostTransform(schema.transforms.addUndefinedDefaults);
-    
+
     architectHost = new TestingArchitectHost('/root', '/root');
     architect = new Architect(architectHost, registry);
 
@@ -24,7 +24,10 @@ describe('Command Runner Builder', () => {
 
   it('can run', async () => {
     // A "run" can have multiple outputs, and contains progress information.
-    const run = await architect.scheduleBuilder('@nuraven/nx-hugo:build', options);
+    const run = await architect.scheduleBuilder(
+      '@nuraven/nx-hugo:server',
+      options
+    );
     // The "result" member (of type BuilderOutput) is the next output.
     const output = await run.result;
 

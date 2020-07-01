@@ -6,11 +6,11 @@ import {
 } from '@angular-devkit/architect';
 import { Observable, from } from 'rxjs';
 import { concatMap } from 'rxjs/operators';
-import { BuildBuilderSchema } from './schema';
+import { ServeBuilderSchema } from './schema';
 import { parseHugoParameters } from '../utils/utils';
 
 export function runBuilder(
-  options: BuildBuilderSchema,
+  options: ServeBuilderSchema,
   context: BuilderContext
 ): Observable<BuilderOutput> {
   return runHugo(options, context).pipe(
@@ -21,15 +21,15 @@ export function runBuilder(
 }
 
 function runHugo(
-  options: BuildBuilderSchema,
+  options: ServeBuilderSchema,
   context: BuilderContext
 ): Observable<BuilderRun> {
   const commands: { command: string }[] = [];
-  const params: string[] = parseHugoParameters(options);
+  const params = parseHugoParameters(options);
   const cwd = context.workspaceRoot + `/apps/${context.target.project}/src`;
 
   commands.push({
-    command: `hugo ${params.join(' ')}`,
+    command: `hugo server ${params.join(' ')}`,
   });
 
   return from(

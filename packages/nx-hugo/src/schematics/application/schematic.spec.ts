@@ -1,16 +1,16 @@
 import { Tree } from '@angular-devkit/schematics';
 import { SchematicTestRunner } from '@angular-devkit/schematics/testing';
 import { createEmptyWorkspace } from '@nrwl/workspace/testing';
-import { join } from 'path';
+import { join } from 'path'
 
-import { NxHugoSchematicSchema } from './schema';
+import { ApplicationSchematicSchema } from './schema';
 
-describe('nx-hugo schematic', () => {
+describe('application schematic', () => {
   let appTree: Tree;
-  const options: NxHugoSchematicSchema = { name: 'test' };
+  const options: ApplicationSchematicSchema = { name: 'test' };
 
   const testRunner = new SchematicTestRunner(
-    '@nuraven/nx-hugo',
+    '@nuraven/application',
     join(__dirname, '../../../collection.json')
   );
 
@@ -19,8 +19,11 @@ describe('nx-hugo schematic', () => {
   });
 
   it('should run successfully', async () => {
-    await expect(
-      testRunner.runSchematicAsync('nx-hugo', options, appTree).toPromise()
+    await expect(testRunner.runSchematicAsync(
+        'application',
+        options,
+        appTree
+      ).toPromise()
     ).resolves.not.toThrowError();
-  });
+  })
 });
