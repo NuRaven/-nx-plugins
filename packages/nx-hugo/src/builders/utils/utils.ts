@@ -1,8 +1,8 @@
-import { ServerBuilderSchema } from '../server/schema';
+import { ServeBuilderSchema } from '../serve/schema';
 import { BuildBuilderSchema } from '../build/schema';
 
 export function parseHugoParameters(
-  options: BuildBuilderSchema | ServerBuilderSchema
+  options: BuildBuilderSchema | ServeBuilderSchema
 ): string[] {
   const params: string[] = Object.keys(options).reduce((acc, key) => {
     const value = options[key];
