@@ -9,17 +9,6 @@ import { concatMap } from 'rxjs/operators';
 import { BuildBuilderSchema } from './schema';
 import { parseHugoParameters } from '../utils/utils';
 
-export function runBuilder(
-  options: BuildBuilderSchema,
-  context: BuilderContext
-): Observable<BuilderOutput> {
-  return runHugo(options, context).pipe(
-    concatMap((result) => {
-      return result.output;
-    })
-  );
-}
-
 function runHugo(
   options: BuildBuilderSchema,
   context: BuilderContext
@@ -38,6 +27,17 @@ function runHugo(
       cwd: cwd,
       color: true,
       parallel: false,
+    })
+  );
+}
+
+export function runBuilder(
+  options: BuildBuilderSchema,
+  context: BuilderContext
+): Observable<BuilderOutput> {
+  return runHugo(options, context).pipe(
+    concatMap((result) => {
+      return result.output;
     })
   );
 }

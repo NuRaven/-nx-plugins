@@ -1,39 +1,38 @@
-import { Architect } from '@angular-devkit/architect';
-import { TestingArchitectHost } from '@angular-devkit/architect/testing';
-import { schema } from '@angular-devkit/core';
-import { join } from 'path';
+import { of } from 'rxjs';
 import { BuildBuilderSchema } from './schema';
+import { MockBuilderContext } from '@nrwl/workspace/testing';
+import { getMockContext } from '../../utils/testing';
 
-const options: BuildBuilderSchema = {};
+const options: BuildBuilderSchema = {
+  help: true,
+};
 
 describe('Command Runner Builder', () => {
-  let architect: Architect;
-  let architectHost: TestingArchitectHost;
+  let context: MockBuilderContext;
+  let scheduleBuilder: jest.SpyInstance;
 
   beforeEach(async () => {
-    const registry = new schema.CoreSchemaRegistry();
-    registry.addPostTransform(schema.transforms.addUndefinedDefaults);
-    
-    architectHost = new TestingArchitectHost('/root', '/root');
-    architect = new Architect(architectHost, registry);
+    context = await getMockContext();
 
-    // This will either take a Node package name, or a path to the directory
-    // for the package.json file.
-    await architectHost.addBuilderFromPackage(join(__dirname, '../../..'));
+    scheduleBuilder = jest.spyOn(context, 'scheduleBuilder').mockReturnValue(
+      Promise.resolve({
+        id: 0,
+        stop: Promise.resolve,
+        info: null,
+        progress: null,
+        result: Promise.resolve({ success: true }),
+        output: of({ success: true }),
+      })
+    );
   });
 
   it('can run', async () => {
-    // A "run" can have multiple outputs, and contains progress information.
-    const run = await architect.scheduleBuilder('@nuraven/nx-hugo:build', options);
-    // The "result" member (of type BuilderOutput) is the next output.
+    const run = await context.scheduleBuilder(
+      '@nuraven/nx-hugo:build',
+      options
+    );
     const output = await run.result;
-
-    // Stop the builder from running. This stops Architect from keeping
-    // the builder-associated states in memory, since builders keep waiting
-    // to be scheduled.
-    await run.stop();
-
-    // Expect that it succeeded.
+    await run.stop;
     expect(output.success).toBe(true);
   });
 });

@@ -16,7 +16,6 @@ import {
   projectRootDir,
   ProjectType,
   toFileName,
-  updateWorkspace,
   updateWorkspaceInTree,
 } from '@nrwl/workspace';
 import { ApplicationSchematicSchema } from './schema';
@@ -33,18 +32,6 @@ interface NormalizedSchema extends ApplicationSchematicSchema {
   projectDirectory: string;
   parsedTags: string[];
   e2eTest?: boolean;
-}
-
-export default function (options: ApplicationSchematicSchema): Rule {
-  const normalizedOptions = normalizeOptions(options);
-  return chain([
-    init(),
-    addProject(normalizedOptions),
-    addProjectToNxJsonInTree(normalizedOptions.projectName, {
-      tags: normalizedOptions.parsedTags,
-    }),
-    addFiles(normalizedOptions),
-  ]);
 }
 
 function normalizeOptions(
@@ -124,4 +111,17 @@ function addFiles(options: NormalizedSchema): Rule {
       move(options.projectRoot),
     ])
   );
+}
+
+export default function (options: ApplicationSchematicSchema): Rule {
+  const normalizedOptions = normalizeOptions(options);
+  return chain([
+    init(),
+    addCypress(normalizedOptions),
+    addProject(normalizedOptions),
+    addProjectToNxJsonInTree(normalizedOptions.projectName, {
+      tags: normalizedOptions.parsedTags,
+    }),
+    addFiles(normalizedOptions),
+  ]);
 }

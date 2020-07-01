@@ -1,42 +1,73 @@
-import { Architect } from '@angular-devkit/architect';
-import { TestingArchitectHost } from '@angular-devkit/architect/testing';
-import { schema } from '@angular-devkit/core';
-import { join } from 'path';
+import { JsonObject } from '@angular-devkit/core';
 import { ServeBuilderSchema } from './schema';
-
-const options: ServeBuilderSchema = {};
+import { MockBuilderContext } from '@nrwl/workspace/testing';
+import { of } from 'rxjs';
+import { runBuilder } from './builder';
+import { getMockContext } from '../../utils/testing';
+import * as builder from '../serve/builder';
 
 describe('Command Runner Builder', () => {
-  let architect: Architect;
-  let architectHost: TestingArchitectHost;
+  let context: MockBuilderContext;
+  let scheduleBuilder: jest.SpyInstance;
+  let startBuild: jest.SpyInstance;
+  let testOptions: JsonObject & ServeBuilderSchema;
 
   beforeEach(async () => {
-    const registry = new schema.CoreSchemaRegistry();
-    registry.addPostTransform(schema.transforms.addUndefinedDefaults);
+    context = await getMockContext();
 
-    architectHost = new TestingArchitectHost('/root', '/root');
-    architect = new Architect(architectHost, registry);
+    testOptions = {
+      help: true,
+    };
 
-    // This will either take a Node package name, or a path to the directory
-    // for the package.json file.
-    await architectHost.addBuilderFromPackage(join(__dirname, '../../..'));
+    startBuild = jest.fn().mockReturnValue(of({ success: true }));
+
+    (builder as any).runBuilder = startBuild;
+
+    scheduleBuilder = jest.spyOn(context, 'scheduleBuilder').mockReturnValue(
+      Promise.resolve({
+        id: 0,
+        stop: Promise.resolve,
+        info: null,
+        progress: null,
+        result: Promise.resolve({ success: true }),
+        output: of({ success: true }),
+      })
+    );
   });
 
-  it('can run', async () => {
-    // A "run" can have multiple outputs, and contains progress information.
-    const run = await architect.scheduleBuilder(
-      '@nuraven/nx-hugo:server',
-      options
-    );
-    // The "result" member (of type BuilderOutput) is the next output.
-    const output = await run.result;
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
 
-    // Stop the builder from running. This stops Architect from keeping
-    // the builder-associated states in memory, since builders keep waiting
-    // to be scheduled.
-    await run.stop();
+  describe('run', () => {
+    it('should call startBuild', async () => {
+      const run = await runBuilder(testOptions, context).toPromise();
+      expect(startBuild).toHaveBeenCalled();
+      await run.stop;
+    });
 
-    // Expect that it succeeded.
-    expect(output.success).toBe(true);
+    // it('should call scheduleBuilder @nrwl/workspace:run-commands with correct options', async () => {
+    //   await runBuilder(testOptions, context).toPromise();
+    //   expect(scheduleBuilder).toHaveBeenCalled();
+    //   expect(scheduleBuilder).toHaveBeenCalledWith(
+    //     '@nrwl/workspace:run-commands',
+    //     {
+    //       commands: [
+    //         {
+    //           command: 'hugo server --help=true',
+    //         },
+    //       ],
+    //       cwd: '/root/apps/null/src',
+    //       color: true,
+    //       parallel: false,
+    //     }
+    //   );
+    // });
+
+    it('should call scully run with success', async () => {
+      const run = await runBuilder(testOptions, context).toPromise();
+      await run.stop;
+      expect(run.success).toEqual(true);
+    });
   });
 });
