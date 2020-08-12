@@ -1,0 +1,37 @@
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>{{ .Title }}</title>
+
+{{ $styles := resources.Get "styles.<%= style %>" }}
+
+{{ if .Site.IsServer }}
+
+<% if (extended && style === 'scss') { %> 
+{{ $options := (dict "targetPath" "css/styles.css" "enableSourceMap" true) }}
+{{ $style := $styles | resources.ToCSS $options | resources.Minify }}
+<% } else { %>  
+{{ $style := $styles }}
+<% } %>
+
+<link rel="stylesheet" href="{{ $style.RelPermalink }}" media="screen" />
+
+{{ else }}
+{{ $postCSSOpts := (dict "use" "autoprefixer" ) }}
+
+<% if (extended && style === 'scss') { %> 
+{{ $cssOpts := (dict "targetPath" "css/styles.css" ) }}
+{{ $style := $styles | toCSS $cssOpts | postCSS $postCSSOpts | minify | fingerprint }}
+<% } else { %>  
+{{ $style := $styles | resources.PostCSS $postCSSOpts | minify | fingerprint }}
+<% } %>
+
+
+<link
+  rel="stylesheet"
+  href="{{ $style.RelPermalink }}"
+  integrity="{{ $style.Data.Integrity }}"
+  crossorigin="anonymous"
+  media="screen"
+/>
+{{ end }}

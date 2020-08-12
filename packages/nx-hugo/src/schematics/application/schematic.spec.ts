@@ -18,12 +18,4 @@ describe('application schematic', () => {
     appTree = createEmptyWorkspace(Tree.empty());
   });
 
-  it('should run successfully', async () => {
-    await expect(testRunner.runSchematicAsync(
-        'application',
-        options,
-        appTree
-      ).toPromise()
-    ).resolves.not.toThrowError();
-  })
 });

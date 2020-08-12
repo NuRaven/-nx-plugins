@@ -15,11 +15,10 @@ function runHugo(
 ): Observable<BuilderRun> {
   const commands: { command: string }[] = [];
   const params = parseHugoParameters(options);
-  const cwd = context.workspaceRoot + `/apps/${context.target.project}/src`;
-  console.log('cwd:', cwd);
+  const cwd = context.workspaceRoot + `/apps/${context.target.project}/site`;
 
   commands.push({
-    command: `hugo server ${params.join(' ')}`,
+    command: `npx hugo server ${params.join(' ')}`,
   });
 
   return from(
@@ -36,7 +35,6 @@ export function runBuilder(
   options: ServeBuilderSchema,
   context: BuilderContext
 ): Observable<BuilderOutput> {
-  console.log('object');
   return runHugo(options, context).pipe(
     concatMap((result) => {
       return result.output;

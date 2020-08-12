@@ -11,6 +11,7 @@ import {
 } from '@angular-devkit/schematics';
 import {
   addProjectToNxJsonInTree,
+  formatFiles,
   names,
   offsetFromRoot,
   projectRootDir,
@@ -20,10 +21,8 @@ import {
 } from '@nrwl/workspace';
 import { ApplicationSchematicSchema } from './schema';
 import init from '../init/schematic';
+import { toJS } from '@nrwl/workspace/src/utils/rules/to-js';
 
-/**
- * Depending on your needs, you can change this to either `Library` or `Application`
- */
 const projectType = ProjectType.Application;
 
 interface NormalizedSchema extends ApplicationSchematicSchema {
@@ -32,6 +31,8 @@ interface NormalizedSchema extends ApplicationSchematicSchema {
   projectDirectory: string;
   parsedTags: string[];
   e2eTest?: boolean;
+  extended?: boolean;
+  style?: string;
 }
 
 function normalizeOptions(
@@ -109,6 +110,8 @@ function addFiles(options: NormalizedSchema): Rule {
         offsetFromRoot: offsetFromRoot(options.projectRoot),
       }),
       move(options.projectRoot),
+      formatFiles({ skipFormat: true }),
+      options.js ? toJS() : noop(),
     ])
   );
 }
@@ -116,7 +119,7 @@ function addFiles(options: NormalizedSchema): Rule {
 export default function (options: ApplicationSchematicSchema): Rule {
   const normalizedOptions = normalizeOptions(options);
   return chain([
-    init(),
+    init(options.extended),
     addCypress(normalizedOptions),
     addProject(normalizedOptions),
     addProjectToNxJsonInTree(normalizedOptions.projectName, {

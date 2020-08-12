@@ -15,10 +15,10 @@ function runHugo(
 ): Observable<BuilderRun> {
   const commands: { command: string }[] = [];
   const params: string[] = parseHugoParameters(options);
-  const cwd = context.workspaceRoot + `/apps/${context.target.project}/src`;
+  const cwd = context.workspaceRoot + `/apps/${context.target.project}/site`;
 
   commands.push({
-    command: `hugo ${params.join(' ')}`,
+    command: `npx hugo ${params.join(' ')}`,
   });
 
   return from(
@@ -43,3 +43,4 @@ export function runBuilder(
 }
 
 export default createBuilder(runBuilder);
+` `

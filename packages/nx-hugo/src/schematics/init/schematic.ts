@@ -1,18 +1,62 @@
-import { chain, Rule } from '@angular-devkit/schematics';
-import { addDepsToPackageJson, setDefaultCollection } from '@nrwl/workspace';
-import { nxVersion, hugoBinVersion } from '../../utils/versions';
+import { chain, Rule, noop } from '@angular-devkit/schematics';
+import {
+  addDepsToPackageJson,
+  setDefaultCollection,
+  updateJsonInTree,
+} from '@nrwl/workspace';
+import {
+  nxVersion,
+  hugoBinVersion,
+  prettierPluginGoTemplateVersion,
+  postcssCliVersion,
+  autoprefixerVersion,
+} from '../../utils/versions';
 
 function addDependencies(): Rule {
   return addDepsToPackageJson(
+    null,
     {
       'hugo-bin': hugoBinVersion,
-    },
-    {
       '@nrwl/workspace': nxVersion,
+      'prettier-plugin-go-template': prettierPluginGoTemplateVersion,
+      'postcss-cli': postcssCliVersion,
+      'autoprefixer': autoprefixerVersion
     }
   );
 }
 
-export default function (): Rule {
-  return chain([setDefaultCollection('@nuraven/nx-hugo'), addDependencies()]);
+function addHugoExtended(): Rule {
+  return updateJsonInTree('package.json', (json) => {
+    return {
+      ...json,
+      'hugo-bin': {
+        buildTags: 'extended',
+      },
+    };
+  });
+}
+
+function updatePrettierRc(): Rule {
+  return updateJsonInTree('.prettierrc', (json) => {
+    return {
+      ...json,
+      overrides: [
+        {
+          files: ['*.html'],
+          options: {
+            parser: 'go-template',
+          },
+        },
+      ],
+    };
+  });
+}
+
+export default function (extended: boolean): Rule {
+  return chain([
+    setDefaultCollection('@nuraven/nx-hugo'),
+    addDependencies(),
+    extended ? addHugoExtended() : noop(),
+    updatePrettierRc(),
+  ]);
 }
