@@ -14,7 +14,7 @@ import {
 
 function addDependencies(): Rule {
   return addDepsToPackageJson(
-    null,
+    {},
     {
       'hugo-bin': hugoBinVersion,
       '@nrwl/workspace': nxVersion,
