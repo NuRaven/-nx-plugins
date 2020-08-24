@@ -6,5 +6,9 @@
   "builders": "./builders.json",
   "peerDependencies": {
     "@nrwl/workspace": "9.4.5"
+  },
+  "dependencies": {
+    "ts-loader": "5.4.5",
+    "webpack": "4.42.0"
   }
 }

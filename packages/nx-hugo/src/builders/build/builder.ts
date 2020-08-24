@@ -13,13 +13,14 @@ function runHugo(
   options: BuildBuilderSchema,
   context: BuilderContext
 ): Observable<BuilderRun> {
-  const commands: { command: string }[] = [];
+  const commands: string[] = [];
   const params: string[] = parseHugoParameters(options);
-  const cwd = context.workspaceRoot + `/apps/${context.target.project}/site`;
+  const cwd = context.workspaceRoot + `/apps/${context.target.project}`;
 
-  commands.push({
-    command: `npx hugo ${params.join(' ')}`,
-  });
+  commands.push(
+    `npx webpack --config webpack.config.js`,
+    `cd site && npx hugo ${params.join(' ')}`
+  );
 
   return from(
     context.scheduleBuilder('@nrwl/workspace:run-commands', {
@@ -43,4 +44,3 @@ export function runBuilder(
 }
 
 export default createBuilder(runBuilder);
-` `

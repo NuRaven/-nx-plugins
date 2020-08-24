@@ -35,3 +35,6 @@
   media="screen"
 />
 {{ end }}
+
+<script data-reload src="/js/{{ .Site.Data.webpack_assets.main.js }}"></script>
+
