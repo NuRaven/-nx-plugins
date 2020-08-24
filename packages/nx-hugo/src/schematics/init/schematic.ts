@@ -10,6 +10,10 @@ import {
   prettierPluginGoTemplateVersion,
   postcssCliVersion,
   autoprefixerVersion,
+  tsLoaderVersion,
+  webpackVersion,
+  webpackCliVersion,
+  assetsWebpackPluginVersion,
 } from '../../utils/versions';
 
 function addDependencies(): Rule {
@@ -20,7 +24,11 @@ function addDependencies(): Rule {
       '@nrwl/workspace': nxVersion,
       'prettier-plugin-go-template': prettierPluginGoTemplateVersion,
       'postcss-cli': postcssCliVersion,
-      'autoprefixer': autoprefixerVersion
+      autoprefixer: autoprefixerVersion,
+      'ts-loader': tsLoaderVersion,
+      webpack: webpackVersion,
+      'webpack-cli': webpackCliVersion,
+      'assets-webpack-plugin': assetsWebpackPluginVersion,
     }
   );
 }

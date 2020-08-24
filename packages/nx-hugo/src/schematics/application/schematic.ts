@@ -74,6 +74,7 @@ function addProject(options: NormalizedSchema): Rule {
 
     architect.build = {
       builder: '@nuraven/nx-hugo:build',
+      options: {},
       configurations: {
         production: {},
       },

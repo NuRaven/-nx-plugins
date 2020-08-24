@@ -13,20 +13,21 @@ function runHugo(
   options: ServeBuilderSchema,
   context: BuilderContext
 ): Observable<BuilderRun> {
-  const commands: { command: string }[] = [];
-  const params = parseHugoParameters(options);
-  const cwd = context.workspaceRoot + `/apps/${context.target.project}/site`;
+  const commands: string[] = [];
+  const params: string[] = parseHugoParameters(options);
+  const cwd = context.workspaceRoot + `/apps/${context.target.project}`;
 
-  commands.push({
-    command: `npx hugo server ${params.join(' ')}`,
-  });
+  commands.push(
+    `npx webpack --watch --config webpack.config.js`,
+    `cd site && npx hugo server ${params.join(' ')}`
+  );
 
   return from(
     context.scheduleBuilder('@nrwl/workspace:run-commands', {
       commands: commands,
       cwd: cwd,
       color: true,
-      parallel: false,
+      parallel: true,
     })
   );
 }
