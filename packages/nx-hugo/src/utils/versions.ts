@@ -1,4 +1,4 @@
-export const nxVersion = '9.4.5';
+export const nxVersion = '10.2.1';
 
 export const hugoBinVersion = '^0.62.3';
 export const workspaceVersion = nxVersion;
