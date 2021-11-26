@@ -15,10 +15,7 @@
               "packages/nx-hugo/tsconfig.lib.json",
               "packages/nx-hugo/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!packages/nx-hugo/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!packages/nx-hugo/**/*"]
           }
         },
         "test": {
@@ -28,9 +25,7 @@
             "tsConfig": "packages/nx-hugo/tsconfig.spec.json",
             "passWithNoTests": true
           },
-          "outputs": [
-            "coverage/packages/nx-hugo"
-          ]
+          "outputs": ["coverage/packages/nx-hugo"]
         },
         "build": {
           "builder": "@nrwl/node:package",
@@ -58,9 +53,7 @@
               }
             ]
           },
-          "outputs": [
-            "{options.outputPath}"
-          ]
+          "outputs": ["{options.outputPath}"]
         }
       },
       "tags": []
@@ -82,9 +75,79 @@
         }
       },
       "tags": [],
-      "implicitDependencies": [
-        "nx-hugo"
-      ]
+      "implicitDependencies": ["nx-hugo"]
+    },
+    "nx-strapi": {
+      "root": "packages/nx-strapi",
+      "sourceRoot": "packages/nx-strapi/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["packages/nx-strapi/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/packages/nx-strapi"],
+          "options": {
+            "jestConfig": "packages/nx-strapi/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/packages/nx-strapi",
+            "tsConfig": "packages/nx-strapi/tsconfig.lib.json",
+            "packageJson": "packages/nx-strapi/package.json",
+            "main": "packages/nx-strapi/src/index.ts",
+            "assets": [
+              "packages/nx-strapi/*.md",
+              {
+                "input": "./packages/nx-strapi/src",
+                "glob": "**/!(*.ts)",
+                "output": "./src"
+              },
+              {
+                "input": "./packages/nx-strapi/src",
+                "glob": "**/*.d.ts",
+                "output": "./src"
+              },
+              {
+                "input": "./packages/nx-strapi",
+                "glob": "generators.json",
+                "output": "."
+              },
+              {
+                "input": "./packages/nx-strapi",
+                "glob": "executors.json",
+                "output": "."
+              }
+            ]
+          }
+        }
+      },
+      "tags": []
+    },
+    "nx-strapi-e2e": {
+      "root": "e2e/nx-strapi-e2e",
+      "projectType": "application",
+      "sourceRoot": "e2e/nx-strapi-e2e/src",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/nx-plugin:e2e",
+          "options": {
+            "target": "nx-strapi:build",
+            "jestConfig": "e2e/nx-strapi-e2e/jest.config.js"
+          }
+        }
+      },
+      "tags": [],
+      "implicitDependencies": ["nx-strapi"]
     }
   }
 }

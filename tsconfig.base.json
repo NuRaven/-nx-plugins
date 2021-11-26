@@ -16,7 +16,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@nuraven/nx-hugo": ["packages/nx-hugo/src/index.ts"]
+      "@nuraven/nx-hugo": ["packages/nx-hugo/src/index.ts"],
+      "@nuraven/nx-strapi": ["packages/nx-strapi/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

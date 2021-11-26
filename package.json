@@ -31,8 +31,10 @@
     "@angular-devkit/build-angular": "^13.0.3",
     "@angular-devkit/schematics": "^13.0.3",
     "@nrwl/cli": "13.2.2",
+    "@nrwl/devkit": "13.2.2",
     "@nrwl/eslint-plugin-nx": "13.2.2",
     "@nrwl/jest": "13.2.2",
+    "@nrwl/node": "13.2.2",
     "@nrwl/nx-plugin": "13.2.2",
     "@nrwl/tao": "13.2.2",
     "@nrwl/workspace": "13.2.2",
@@ -51,8 +53,11 @@
     "strapi-generate-new": "^3.6.8",
     "ts-jest": "27.0.5",
     "ts-node": "9.1.1",
+    "tslib": "^2.0.0",
     "tslint": "6.1.3",
     "typescript": "4.3.5"
   },
-  "dependencies": {}
+  "dependencies": {
+    "tslib": "^2.0.0"
+  }
 }
