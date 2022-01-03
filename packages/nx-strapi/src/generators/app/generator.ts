@@ -1,15 +1,12 @@
 import {
   addProjectConfiguration,
   formatFiles,
-  generateFiles,
   getWorkspaceLayout,
   names,
-  offsetFromRoot,
-  Tree,
+  Tree
 } from '@nrwl/devkit';
-import * as path from 'path';
-import { NxStrapiGeneratorSchema } from './schema';
 import * as generateStrapi from 'strapi-generate-new';
+import { NxStrapiGeneratorSchema } from './schema';
 
 interface NormalizedSchema extends NxStrapiGeneratorSchema {
   projectName: string;
@@ -18,26 +15,21 @@ interface NormalizedSchema extends NxStrapiGeneratorSchema {
   parsedTags: string[];
 }
 
-function normalizeOptions(
-  tree: Tree,
-  options: NxStrapiGeneratorSchema
-): NormalizedSchema {
+function normalizeOptions(tree: Tree, options: NxStrapiGeneratorSchema): NormalizedSchema {
   const name = names(options.name).fileName;
   const projectDirectory = options.directory
     ? `${names(options.directory).fileName}/${name}`
     : name;
   const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
   const projectRoot = `${getWorkspaceLayout(tree).libsDir}/${projectDirectory}`;
-  const parsedTags = options.tags
-    ? options.tags.split(',').map((s) => s.trim())
-    : [];
+  const parsedTags = options.tags ? options.tags.split(',').map((s) => s.trim()) : [];
 
   return {
     ...options,
     projectName,
     projectRoot,
     projectDirectory,
-    parsedTags,
+    parsedTags
   };
 }
 
@@ -49,18 +41,18 @@ export default async function (tree: Tree, options: NxStrapiGeneratorSchema) {
     sourceRoot: `${normalizedOptions.projectRoot}/src`,
     targets: {
       build: {
-        executor: '@nuraven/nx-strapi:build',
+        executor: '@nuraven/nx-strapi:build'
       },
       serve: {
-        executor: '@nuraven/nx-strapi:develop',
-      },
+        executor: '@nuraven/nx-strapi:develop'
+      }
     },
-    tags: normalizedOptions.parsedTags,
+    tags: normalizedOptions.parsedTags
   });
 
   await generateStrapi(normalizedOptions.projectRoot, {
     quickstart: normalizedOptions.quickstart,
-    run: false,
+    run: false
   });
 
   await formatFiles(tree);

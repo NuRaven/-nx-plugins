@@ -3,7 +3,7 @@ import {
   ensureNxProject,
   readJson,
   runNxCommandAsync,
-  uniq,
+  uniq
 } from '@nrwl/nx-plugin/testing';
 describe('nx-hugo e2e', () => {
   it('should create nx-hugo', async (done) => {

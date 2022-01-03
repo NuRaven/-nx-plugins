@@ -3,10 +3,10 @@
   "name": "nx-strapi",
   "version": "0.0.1",
   "generators": {
-    "nx-strapi": {
-      "factory": "./src/generators/nx-strapi/generator",
-      "schema": "./src/generators/nx-strapi/schema.json",
-      "description": "nx-strapi generator"
+    "application": {
+      "factory": "./src/generators/application/generator",
+      "schema": "./src/generators/application/schema.json",
+      "description": "application generator"
     }
   }
 }
